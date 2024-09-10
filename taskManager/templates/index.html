@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Менеджер задач</title>
+  </head>
+  <body>
+    <h1>Менеджер задач</h1>
+    <h2>Создать новую задачу</h2>
+    <form method="post" action="{{ url_for('create_task') }}">
+      <input type="text" id="title" name="title" required placeholder="Название"><br>
+      <textarea id="description" name="description" required placeholder="Описание"></textarea><br>
+      <button type="submit">Создать</button>
+    </form>
+    <h1>Список задач</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Дата создания</th>
+            <th>Завершённость</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.created_date }}</td>
+            <td><input type="checkbox" form="del" value='{{task.id}}' name="delete"></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Удалить задачу</h2>
+    <form id="del" method="post" action="{{ url_for('delete_task') }}">
+      <button type="submit">Удалить выбранные</button>
+    </form>
+    <form method="post" action="{{ url_for('clear') }}">
+      <button type="submit">Удалить все</button>
+    </form>
+  </body>
+</html>
